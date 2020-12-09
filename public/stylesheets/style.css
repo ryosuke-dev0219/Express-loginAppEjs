@@ -1,0 +1,27 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.top-wrapper{
+  height: 700px;
+  background-image:url("../images/furano-1024x683.jpg") ;
+  background-size: cover;
+  color: white;
+  text-align: center;
+}
+
+.top-wrapper h1 {
+  font-size: 45px;
+  letter-spacing: 5px;
+  padding-top: 40px;
+}
+
+.top-wrapper span {
+  color: #ff4a4a;
+  font-size: 60px;
+}
