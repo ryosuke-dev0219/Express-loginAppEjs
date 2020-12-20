@@ -8,10 +8,11 @@ a {
 }
 
 .top-wrapper{
-  height: 700px;
+  padding: 50px 0 100px 0;  
   background-image:url("../images/furano-1024x683.jpg") ;
   /* background-image:url("../images/top.jpg") ; */
   background-size: cover;
+  background-position: right bottom;
   color: white;
   text-align: center;
 }
@@ -25,4 +26,8 @@ a {
 .top-wrapper span {
   color: #ff4a4a;
   font-size: 60px;
+}
+
+.grid{
+  padding-top: 20px;
 }

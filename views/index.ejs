@@ -4,16 +4,17 @@
     <title><%= title %></title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel='stylesheet' href='/stylesheets/style.css' />
+
   </head>
   <body>
     <div class="container">
       <header>
-        <nav class="navbar navbar-dark bg-dark mt-4">
+        <nav class="navbar navbar-dark bg-secondary mt-4">
           <a class="navbar-brand" href="/">Express-loginAppEjs</a>
           <% if(!user){ %>
-            <a class="btn btn-outline-primary my-2 my-sm-0" href="/login">Login</a>  
+            <a class="btn btn-primary my-2 my-sm-0" href="/login">Login</a>  
           <% }else{ %>
-            <a class="btn btn-outline-primary my-2 my-sm-0" href="/logout">Logout</a>  
+            <a class="btn btn-primary my-2 my-sm-0" href="/logout">Logout</a>  
           <% } %>
         </nav>
       <div class="top-wrapper">
@@ -23,7 +24,8 @@
         <% if(!user){ %>
           <h1><span>ログイン</span>してください</h1>  
         <% }else{ %>
-          <h1>こんにちは<span><%= user.name %></span>さん</h1>  
+          <h1>こんにちは<span><%= user.name %></span>さん</h1> 
+          <a class="btn btn-success my-2 my-sm-0" href="/TodoList">Todoリスト</a>  
         <% } %>
       </div>
       </header>
