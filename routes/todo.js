@@ -10,21 +10,15 @@ router.get('/', function(req, res, next) {
     if (req.isAuthenticated()) { // 認証済
         todo.findAll({
                 where: {
-                    user_id: user.id
+                    user_id: user.id,
+                    delete: false
                 }
             })
             .then(todo => {
-
-                // todoの中身確認
-                //console.log(todo);
-
                 res.render('todo', { title: 'TODO', user: user, todo: todo });
 
             })
             .catch(error => { // エラー処理
-
-                console.log('エラー');
-                console.log('ログインからやり直し');
                 console.log(error);
             });
     } else { // 認証されていない
@@ -32,11 +26,10 @@ router.get('/', function(req, res, next) {
     }
 });
 
-
+// Crate
 router.get('/Create', function(req, res, next) {
 
     if (req.isAuthenticated()) { // 認証済
-
 
         res.render('todoCreate', { title: 'TodoCreate', user: req.user });
     } else { // 認証されていない
@@ -68,22 +61,113 @@ router.post('/Create', function(req, res, next) {
                     done: false,
                     delete: false
                 }).then(resurl => {
-                    console.log(resurl);
                     res.redirect('/TodoList');
                 })
 
             })
             .catch(error => { // エラー処理
-
-                console.log('エラー');
-                console.log('ログインからやり直し');
                 console.log(error);
             });
+    } else { // 認証されていない
+        res.redirect('/login'); // ログイン画面に遷移
+    }
+});
 
+// Update
+router.get('/Update/:seq', function(req, res, next) {
+
+    if (req.isAuthenticated()) { // 認証済
+        const user = req.user;
+        const todo_seq = req.params.seq;
+
+        todo.findOne({
+            where: {
+                user_id: user.id,
+                seq: todo_seq
+            }
+        }).then(target => {
+
+            res.render('todoUpdate', { title: 'TodoUpdate', user: user, todo: target });
+        }).catch(error => { // エラー処理
+            console.log(error);
+        });
 
     } else { // 認証されていない
         res.redirect('/login'); // ログイン画面に遷移
     }
+});
+
+router.post('/Update/:id', function(req, res, next) {
+
+    const user = req.user;
+    const todo_id = req.params.id;
+    const now = new Date();
+
+    todo.update({
+        todo: req.body['todo'],
+        updatedAt: now
+    }, {
+        where: {
+            id: todo_id
+        }
+    }).then(resurl => {
+        res.redirect('/TodoList');
+    }).catch(error => { // エラー処理
+        console.log(error);
+    });
+});
+
+// Check
+router.post('/Check', function(req, res, next) {
+
+    const user = req.user;
+    const todo_seq = req.body.seq;
+    const now = new Date();
+
+    todo.findOne({
+        where: {
+            user_id: user.id,
+            seq: todo_seq
+        }
+    }).then(target => {
+
+        // 現在のdoneの値
+        var done_flag = target.done;
+
+        todo.update({
+            done: !done_flag,
+            updatedAt: now
+        }, {
+            where: {
+                id: target.id
+            }
+        }).then(resurl => {
+            res.redirect('/TodoList');
+        }).catch(error => { // エラー処理
+            console.log(error);
+        });
+    })
+});
+
+// Delete
+router.post('/Delete/:id', function(req, res, next) {
+
+    const user = req.user;
+    const todo_id = req.params.id;
+    const now = new Date();
+
+    todo.update({
+        delete: true,
+        updatedAt: now
+    }, {
+        where: {
+            id: todo_id
+        }
+    }).then(resurl => {
+        res.redirect('/TodoList');
+    }).catch(error => { // エラー処理
+        console.log(error);
+    });
 });
 
 module.exports = router;

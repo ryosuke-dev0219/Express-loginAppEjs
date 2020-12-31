@@ -18,14 +18,14 @@
     </header>
     <main>
       <div class="card">
-        <form method="POST" action="/TodoList/Create">
-          <h5 class="card-header">TODO追加</h5>
+        <form method="POST" action="/TodoList/Update/<%= todo.id %>">
+          <h5 class="card-header">TODO更新</h5>
           <div class="card-body">
             <div class="form-group">
               <h5 class="card-title">やること</h5> 
-              <input name="todo" id="todo" type="text" class="form-control">
+              <input name="todo" id="todo" type="text" class="form-control" value="<%= todo.todo %>">
             </div>
-            <button type="submit" class="btn btn-info">追加 <i class="fa fa-pencil" aria-hidden="true"></i></button>
+            <button type="submit" class="btn btn-primary mr-2">修正 <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
           </div>
         </form>
       </div>
